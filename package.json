@@ -1,0 +1,102 @@
+{
+  "name": "@human.tech/plugin-waap",
+  "version": "0.1.2",
+  "description": "WaaP wallet plugin for ElizaOS — 2PC-MPC signing for EVM and Sui",
+  "license": "MIT",
+  "author": "Holonym Foundation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holonym-foundation/eliza-plugin-waap.git"
+  },
+  "homepage": "https://github.com/holonym-foundation/eliza-plugin-waap#readme",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build-to-publish": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "lint-check": "eslint --ext .ts src",
+    "lint-fix": "eslint --fix --ext .ts src",
+    "format": "prettier --write \"**/*.{ts,md}\"",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "dependencies": {
+    "@human.tech/waap-cli": "^1.0.2",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "@elizaos/core": ">=1.2.1 <2.0.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^8.38.0",
+    "prettier": "^2.5.1",
+    "tsup": "^8.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {
+      "WAAP_CLI_SESSION_DIR": {
+        "type": "string",
+        "description": "Override session storage path (default: auto-generated per agent)",
+        "optional": true
+      },
+      "WAAP_DEFAULT_CHAIN": {
+        "type": "string",
+        "description": "Default chain (e.g. '1', 'evm:137', 'sui:mainnet'). Default: '1'. Switchable via WAAP_SWITCH_CHAIN.",
+        "optional": true
+      },
+      "WAAP_DEFAULT_CHAIN_ID": {
+        "type": "string",
+        "description": "Deprecated: use WAAP_DEFAULT_CHAIN. Fallback EVM chain ID (default: 1).",
+        "optional": true
+      },
+      "WAAP_DEFAULT_RPC_URL": {
+        "type": "string",
+        "description": "Override RPC URL (default: auto-resolved from chainid.network)",
+        "optional": true
+      }
+    }
+  },
+  "keywords": [
+    "plugin",
+    "elizaos",
+    "elizaos-plugins",
+    "eliza-plugin",
+    "wallet",
+    "waap",
+    "mpc",
+    "2pc",
+    "evm",
+    "sui"
+  ]
+}

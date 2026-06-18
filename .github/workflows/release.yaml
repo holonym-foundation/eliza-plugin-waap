@@ -1,0 +1,59 @@
+name: Release
+
+# Publishes @human.tech/plugin-waap to npm via Changesets.
+#
+# Flow:
+#   1. PRs land on main carrying a `.changeset/*.md` file.
+#   2. This workflow opens/updates a "Version Packages" PR that bumps the
+#      version + CHANGELOG.
+#   3. Merging that PR runs `changeset publish` → npm.
+#
+# Auth: npm Trusted Publishing (OIDC) — no NPM_TOKEN secret required. A one-time
+# setup on npmjs.com must register this repo + workflow as a trusted publisher
+# for @human.tech/plugin-waap (Package settings → Publishing access → Trusted
+# publisher → GitHub Actions: holonym-foundation/eliza-plugin-waap,
+# workflow: release.yaml). `id-token: write` + provenance below do the rest.
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # OIDC: npm trusted publishing + provenance attestation
+      contents: write # changesets pushes the version bump and tags
+      pull-requests: write # changesets opens the "Version Packages" PR
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - run: npm install -g pnpm@10.26.0
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - name: Create Release PR or Publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm version-packages
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Empty NPM_TOKEN forces changesets onto the OIDC trusted-publishing
+          # path instead of looking for a token. Provenance requires npm >= 11.5
+          # (shipped with Node 24).
+          NPM_TOKEN: ''
+          NPM_CONFIG_PROVENANCE: 'true'
