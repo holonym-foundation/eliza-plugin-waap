@@ -29,6 +29,7 @@ jobs:
       id-token: write # OIDC: npm trusted publishing + provenance attestation
       contents: write # changesets pushes the version bump and tags
       pull-requests: write # changesets opens the "Version Packages" PR
+    environment: Production
     steps:
       - uses: actions/checkout@v4
         with:
