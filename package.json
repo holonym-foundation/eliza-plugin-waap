@@ -1,6 +1,6 @@
 {
   "name": "@human.tech/plugin-waap",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "WaaP wallet plugin for ElizaOS — 2PC-MPC signing for EVM and Sui",
   "license": "MIT",
   "author": "Holonym Foundation",
