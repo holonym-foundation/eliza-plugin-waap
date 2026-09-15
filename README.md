@@ -2,6 +2,8 @@
 
 ElizaOS plugin for the **WaaP wallet** — 2-of-2 MPC signing for EVM and Sui transactions, with native 2FA support, server-enforced spending policies, and zero private-key exposure to the agent process.
 
+**Docs:** [Using WaaP from ElizaOS](https://docs.waap.human.tech/for-agents/frameworks/elizaos) · [WaaP for agents](https://docs.waap.human.tech/for-agents) · npm [`@human.tech/plugin-waap`](https://www.npmjs.com/package/@human.tech/plugin-waap)
+
 > **Status:** Full EVM + Sui support. 20 actions, 543 tests.
 
 ## Why this plugin (vs. Coinbase AgentKit)
